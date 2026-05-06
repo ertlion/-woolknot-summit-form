@@ -219,12 +219,95 @@
     animation: fadeUp 1s ease-out 0.7s forwards;
   }
 
+  /* ============ Countdown ============ */
+  .countdown {
+    max-width: 480px;
+    margin-bottom: 48px;
+    padding: 22px 26px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: rgba(242, 234, 216, 0.025);
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.85s forwards;
+  }
+
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .countdown-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 0 var(--gold);
+    animation: pulse 2.4s infinite;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .countdown-cell {
+    text-align: center;
+    padding: 6px 0;
+    position: relative;
+  }
+
+  .countdown-cell + .countdown-cell::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 18%;
+    bottom: 18%;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .countdown-num {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(30px, 3.4vw, 40px);
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    display: block;
+  }
+
+  .countdown-unit {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 8px;
+    display: block;
+  }
+
+  .countdown.live .countdown-num {
+    color: var(--gold);
+    font-style: italic;
+    font-size: clamp(22px, 2.4vw, 28px);
+  }
+
   .perks {
     display: grid;
     gap: 22px;
     max-width: 480px;
     opacity: 0;
-    animation: fadeUp 1s ease-out 0.9s forwards;
+    animation: fadeUp 1s ease-out 0.95s forwards;
   }
 
   .perk {
@@ -632,6 +715,28 @@
         Yeni koleksiyonlar, atölye ziyaretleri ve davetli etkinlikler — önce sizin için.
       </p>
 
+      <div class="countdown" id="countdown" data-target="2026-07-01T00:00:00+03:00">
+        <div class="countdown-label">Topluluğa Katılım Açılıyor · 1 Temmuz 2026</div>
+        <div class="countdown-grid">
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-unit">Gün</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-unit">Saat</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-unit">Dakika</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-unit">Saniye</span>
+          </div>
+        </div>
+      </div>
+
       <div class="perks">
         <div class="perk">
           <div class="perk-num">01</div>
@@ -754,6 +859,40 @@
 </div>
 
 <script>
+  // Countdown to 1 July 2026 (Istanbul TZ)
+  (function initCountdown() {
+    const cd = document.getElementById('countdown');
+    if (!cd) return;
+    const target = new Date(cd.dataset.target).getTime();
+    const els = {
+      d: document.getElementById('cd-days'),
+      h: document.getElementById('cd-hours'),
+      m: document.getElementById('cd-mins'),
+      s: document.getElementById('cd-secs'),
+    };
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        cd.classList.add('live');
+        cd.querySelector('.countdown-grid').innerHTML =
+          '<div style="grid-column:1/-1"><span class="countdown-num">Şimdi açık</span></div>';
+        clearInterval(timer);
+        return;
+      }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+      els.d.textContent = pad(days);
+      els.h.textContent = pad(hours);
+      els.m.textContent = pad(mins);
+      els.s.textContent = pad(secs);
+    }
+    tick();
+    const timer = setInterval(tick, 1000);
+  })();
+
   const chips = document.querySelectorAll('.chip');
   const interestInput = document.getElementById('interest');
 
