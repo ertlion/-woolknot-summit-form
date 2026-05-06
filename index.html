@@ -50,6 +50,190 @@
     opacity: 0.6;
   }
 
+  /* ============ Invitation Banner ============ */
+  .invitation-banner {
+    position: relative;
+    z-index: 2;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 0 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .inv-row {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 14px;
+  }
+
+  .inv-card {
+    padding: 30px 34px;
+    border-radius: 3px;
+    display: flex;
+    gap: 26px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s ease-out 0.2s forwards;
+  }
+
+  .inv-card--cream {
+    background: var(--cream);
+    color: var(--navy);
+  }
+
+  .inv-card--counter {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    gap: 10px;
+    animation-delay: 0.35s;
+  }
+
+  .inv-card--dark {
+    background: var(--navy-deep);
+    color: var(--cream);
+    border: 1px solid rgba(200, 169, 106, 0.25);
+    animation-delay: 0.5s;
+  }
+
+  .inv-icon {
+    width: 56px;
+    height: 56px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  .inv-icon--gold {
+    border-color: var(--gold);
+    color: var(--gold);
+    opacity: 1;
+  }
+
+  .inv-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .inv-content { flex: 1; }
+
+  .inv-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(15, 31, 68, 0.5);
+    margin-bottom: 6px;
+  }
+
+  .inv-card--dark .inv-eyebrow { color: var(--gold); }
+
+  .inv-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.1;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: inherit;
+  }
+
+  .inv-desc {
+    font-size: 13.5px;
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 18px;
+    color: rgba(15, 31, 68, 0.7);
+  }
+
+  .inv-card--dark .inv-desc {
+    color: var(--cream-dim);
+    margin-bottom: 0;
+  }
+
+  .inv-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--navy);
+    border: 1px solid var(--navy);
+    padding: 13px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+  }
+
+  .inv-btn:hover:not(:disabled) {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  .inv-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+
+  .inv-btn .arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .inv-btn:hover:not(:disabled) .arrow {
+    transform: translateX(4px);
+  }
+
+  .inv-counter-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(15, 31, 68, 0.55);
+  }
+
+  .inv-counter-num {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(46px, 5.8vw, 68px);
+    line-height: 1;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .inv-counter-sep {
+    color: var(--gold);
+    font-style: italic;
+    font-size: 0.7em;
+    font-weight: 300;
+  }
+
+  .inv-counter-total {
+    color: rgba(15, 31, 68, 0.4);
+  }
+
+  .inv-counter-status {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
   .container {
     position: relative;
     z-index: 2;
@@ -644,6 +828,26 @@
   .form-hidden { display: none !important; }
 
   @media (max-width: 900px) {
+    .invitation-banner {
+      padding: 20px 0 0;
+    }
+    .inv-row {
+      grid-template-columns: 1fr;
+    }
+    .inv-card {
+      padding: 24px 22px;
+      gap: 18px;
+    }
+    .inv-card--cream {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+    .inv-card--dark {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
     .container {
       grid-template-columns: 1fr;
     }
@@ -676,6 +880,64 @@
 </style>
 </head>
 <body>
+
+<!-- ============ Invitation Status Banner ============ -->
+<section class="invitation-banner" aria-label="Davet Durumu">
+  <div class="inv-row">
+
+    <!-- Card 1: Invitation info -->
+    <div class="inv-card inv-card--cream">
+      <div class="inv-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12.5c0-1.1.9-2 2-2h22c1.1 0 2 .9 2 2v3a2.5 2.5 0 0 0 0 5v3c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-3a2.5 2.5 0 0 0 0-5z"/>
+          <line x1="20" y1="11" x2="20" y2="13"/>
+          <line x1="20" y1="15" x2="20" y2="18"/>
+          <line x1="20" y1="20" x2="20" y2="22"/>
+        </svg>
+      </div>
+      <div class="inv-content">
+        <div class="inv-eyebrow">İlk 20 Kişiye</div>
+        <h3 class="inv-title">Özel Lansman Daveti</h3>
+        <p class="inv-desc" id="invDesc">
+          Lansman davet hakkı için son <strong id="invRemaining">--</strong> kişilik kontenjan kaldı.
+        </p>
+        <button type="button" class="inv-btn" id="invBtn">
+          <span id="invBtnText">Davete Katıl</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Card 2: Counter -->
+    <div class="inv-card inv-card--cream inv-card--counter">
+      <div class="inv-counter-label">Davet Hakkı Kazanan Kişi Sayısı</div>
+      <div class="inv-counter-num" aria-live="polite">
+        <span id="invCurrent">--</span>
+        <span class="inv-counter-sep">/</span>
+        <span class="inv-counter-total" id="invTotal">20</span>
+      </div>
+      <div class="inv-counter-status" id="invCounterStatus">— Kontenjan Devam Ediyor —</div>
+    </div>
+
+  </div>
+
+  <!-- Card 3: Early Collection Access -->
+  <div class="inv-card inv-card--dark">
+    <div class="inv-icon inv-icon--gold">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 22l-2-10 7 5 6-12 6 12 7-5-2 10z"/>
+        <line x1="5" y1="26" x2="27" y2="26"/>
+      </svg>
+    </div>
+    <div class="inv-content">
+      <div class="inv-eyebrow">Tüm Kayıt Sahiplerine</div>
+      <h3 class="inv-title">Koleksiyonu Herkesten Önce Görün</h3>
+      <p class="inv-desc">
+        Lansman daveti kontenjanı dolmuş olsa da, Woolknot'un ilk koleksiyonunu site açılışından önce seçili misafirlerle paylaşmaya devam ediyoruz.
+      </p>
+    </div>
+  </div>
+</section>
 
 <div class="container">
 
@@ -788,7 +1050,7 @@
           Sizinle iletişime geçeceğiz. Kontenjan sınırlıdır — başvurular tek tek değerlendirilir.
         </p>
 
-        <form id="joinForm" novalidate>
+        <form id="joinForm" novalidate autocomplete="on">
           <!-- FormSubmit.co hidden fields -->
           <input type="hidden" name="_subject" value="Yeni Woolknot Topluluk Başvurusu">
           <input type="hidden" name="_template" value="table">
@@ -859,6 +1121,82 @@
 </div>
 
 <script>
+  // ============ Invitation counter (dynamic, Abacus API) ============
+  // Each successful form submission increments the counter automatically.
+  // Counter is shared across all visitors / devices.
+  const COUNTER_NS  = 'woolknot-summit-2026';
+  const COUNTER_KEY = 'invitations';
+  const COUNTER_TOTAL = 20;
+  const ABACUS_GET = 'https://abacus.jasoncameron.dev/get/' + COUNTER_NS + '/' + COUNTER_KEY;
+  const ABACUS_HIT = 'https://abacus.jasoncameron.dev/hit/' + COUNTER_NS + '/' + COUNTER_KEY;
+
+  function renderInvitation({ current, total }) {
+    const remaining = Math.max(0, total - current);
+    const isFull = remaining <= 0;
+
+    const elCurrent = document.getElementById('invCurrent');
+    const elTotal = document.getElementById('invTotal');
+    const elRemaining = document.getElementById('invRemaining');
+    const elDesc = document.getElementById('invDesc');
+    const elBtn = document.getElementById('invBtn');
+    const elBtnText = document.getElementById('invBtnText');
+    const elArrow = elBtn ? elBtn.querySelector('.arrow') : null;
+    const elStatus = document.getElementById('invCounterStatus');
+
+    if (elCurrent) elCurrent.textContent = current;
+    if (elTotal) elTotal.textContent = total;
+    if (elRemaining) elRemaining.textContent = remaining;
+
+    if (isFull) {
+      if (elDesc) elDesc.textContent = "Woolknot'un özel lansman davet kontenjanı tamamlandı.";
+      if (elBtnText) elBtnText.textContent = 'Davet Kontenjanı Doldu';
+      if (elBtn) elBtn.disabled = true;
+      if (elArrow) elArrow.style.display = 'none';
+      if (elStatus) elStatus.textContent = '— Davetiye Hakkı Doldu —';
+    } else {
+      if (elBtn) {
+        elBtn.disabled = false;
+        elBtn.addEventListener('click', () => {
+          const target = document.getElementById('joinForm');
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => {
+            const f = document.getElementById('fullname');
+            if (f) f.focus();
+          }, 500);
+        });
+      }
+      if (elStatus) elStatus.textContent = '— ' + remaining + ' Davet Hakkı Kaldı —';
+    }
+  }
+
+  function loadInvitationCount() {
+    fetch(ABACUS_GET, { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => renderInvitation({
+        current: Number(data.value) || 0,
+        total: COUNTER_TOTAL
+      }))
+      .catch(() => renderInvitation({ current: 0, total: COUNTER_TOTAL }));
+  }
+
+  // Increment counter after a successful form submission.
+  // Returns the new count (or null on failure).
+  async function incrementInvitationCount() {
+    try {
+      const r = await fetch(ABACUS_HIT, { cache: 'no-store' });
+      if (!r.ok) throw new Error('hit failed');
+      const data = await r.json();
+      const newVal = Number(data.value) || 0;
+      renderInvitation({ current: newVal, total: COUNTER_TOTAL });
+      return newVal;
+    } catch (e) {
+      console.warn('Counter increment failed:', e);
+      return null;
+    }
+  }
+
+  loadInvitationCount();
+
   // Countdown to 1 July 2026 (Istanbul TZ)
   (function initCountdown() {
     const cd = document.getElementById('countdown');
@@ -952,6 +1290,9 @@
       const result = await response.json().catch(() => ({}));
 
       if (response.ok && (result.success === 'true' || result.success === true)) {
+        // Increment shared counter (fires-and-forgets, doesn't block UX)
+        incrementInvitationCount();
+
         const num = String(Math.floor(Math.random() * 240) + 12).padStart(3, '0');
         memberNumSpan.textContent = num + ' / 250';
 
