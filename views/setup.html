@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Woolknot Admin · Authenticator Kurulumu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark:     #1A1612;
+    --bg-deep:     #14110D;
+    --bg-soft:     #2A2520;
+    --cream:       #EDE4D5;
+    --cream-dim:   rgba(245, 240, 232, 0.55);
+    --cream-faint: rgba(245, 240, 232, 0.16);
+    --gold:        #B8885A;
+    --line:        rgba(245, 240, 232, 0.18);
+    --danger:      #E89090;
+    --serif: 'Fraunces', serif;
+    --sans:  'Manrope', system-ui, sans-serif;
+    --mono:  'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  body {
+    background: var(--bg-dark);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 540px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px 36px 36px;
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.005em;
+    margin-bottom: 6px;
+  }
+  .brand span { color: var(--gold); font-style: italic; }
+
+  .sub {
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin-bottom: 28px;
+    line-height: 1.55;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: flex-start;
+  }
+  .step:last-of-type { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-body {
+    flex: 1;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--cream);
+  }
+  .step-body p { color: var(--cream-dim); margin-top: 4px; }
+  .step-body a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+  .qr-wrap {
+    background: var(--cream);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0 12px;
+    text-align: center;
+  }
+  .qr-wrap img { display: block; margin: 0 auto; max-width: 240px; width: 100%; height: auto; }
+
+  .secret {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    background: var(--bg-dark);
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    border-radius: 3px;
+    color: var(--gold);
+    word-break: break-all;
+    margin-top: 8px;
+  }
+
+  .verify {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: block;
+    margin-bottom: 10px;
+  }
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg-dark);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: 24px;
+    letter-spacing: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    border-radius: 3px;
+    outline: none;
+  }
+  input[type="text"]:focus { border-color: var(--gold); }
+  input[type="text"]::placeholder { color: var(--cream-faint); letter-spacing: 8px; }
+
+  .btn {
+    background: var(--cream);
+    color: var(--bg-dark);
+    border: 1px solid var(--cream);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 16px 22px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 16px;
+    font-weight: 500;
+  }
+  .btn:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: var(--bg-deep); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .msg {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--cream-dim);
+    text-align: center;
+    min-height: 16px;
+  }
+  .msg.error { color: var(--danger); }
+  .msg.success { color: var(--gold); }
+
+  .warning {
+    background: rgba(232, 144, 144, 0.06);
+    border-left: 2px solid var(--danger);
+    padding: 12px 14px;
+    border-radius: 0 2px 2px 0;
+    font-size: 11.5px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    margin-top: 24px;
+  }
+  .warning strong { color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1 class="brand">Woolknot <span>Admin</span></h1>
+  <p class="sub">Authenticator uygulamanızı bu hesaba bağlayın. Bir kez kurulduktan sonra her girişte sadece 6 haneli kod girmeniz yeterli.</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <strong>Bir authenticator app indirin</strong>
+      <p>
+        <a href="https://apps.apple.com/app/google-authenticator/id388497605" target="_blank">Google Authenticator (iOS)</a>
+        ·
+        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator (Android)</a>
+        · veya Authy, 1Password, Microsoft Authenticator
+      </p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <strong>QR kodu tarayın</strong>
+      <p>App'i açıp "+" butonu → "QR kod tara" → aşağıdaki kodu okutun:</p>
+      <div class="qr-wrap">
+        <img id="qrImg" src="" alt="QR Code" />
+      </div>
+      <p style="font-size:11px;margin-top:6px">QR taranamıyor mu? Manuel kod:</p>
+      <div class="secret" id="secret">—</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <strong>İlk kodu doğrulayın</strong>
+      <p>App'te "Woolknot Admin" hesabı görünür. 6 haneli kodu aşağıya girin — başarılı olursa otomatik giriş yapılır.</p>
+    </div>
+  </div>
+
+  <div class="verify">
+    <label for="code">Doğrulama Kodu</label>
+    <input type="text" id="code" maxlength="6" placeholder="••••••" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" />
+    <button class="btn" id="verifyBtn">Doğrula ve Giriş Yap</button>
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <div class="warning">
+    <strong>Önemli:</strong> Telefonunuzu kaybederseniz veya app'i sıfırlarsanız, sunucuda <code style="color:var(--gold)">state.json</code> dosyasındaki <code style="color:var(--gold)">totp.enrolled</code> alanını <code style="color:var(--gold)">false</code> yapıp bu sayfaya tekrar gelmeniz gerekir. (Veya kurtarma kodlarını şimdi yedekleyin.)
+  </div>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const msg = $('msg');
+
+  async function loadSetup() {
+    try {
+      const r = await fetch('/admin/setup/data');
+      if (r.status === 404) {
+        document.body.innerHTML = '<div class="card"><h1 class="brand">Setup Tamamlanmış</h1><p class="sub">Kurulum daha önce yapılmış. <a href="/admin/login" style="color:var(--gold)">Girişe git →</a></p></div>';
+        return;
+      }
+      const d = await r.json();
+      $('qrImg').src = d.qrDataUrl;
+      $('secret').textContent = d.secret;
+    } catch (e) {
+      $('msg').textContent = 'Setup verisi alınamadı';
+      $('msg').className = 'msg error';
+    }
+  }
+
+  function setMsg(text, type) {
+    msg.textContent = text || '';
+    msg.className = 'msg' + (type ? ' ' + type : '');
+  }
+
+  async function verify() {
+    const code = $('code').value.trim();
+    if (!/^\d{6}$/.test(code)) { setMsg('6 haneli kod girin', 'error'); return; }
+    setMsg('Doğrulanıyor...');
+    $('verifyBtn').disabled = true;
+    try {
+      const r = await fetch('/admin/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setMsg('Kayıt tamamlandı! Yönlendiriliyor...', 'success');
+        window.location.href = d.redirect || '/admin';
+      } else {
+        setMsg(d.message || 'Hata', 'error');
+        $('verifyBtn').disabled = false;
+        $('code').value = '';
+        $('code').focus();
+      }
+    } catch (err) {
+      setMsg('Bağlantı hatası', 'error');
+      $('verifyBtn').disabled = false;
+    }
+  }
+
+  $('verifyBtn').addEventListener('click', verify);
+  $('code').addEventListener('keydown', (e) => { if (e.key === 'Enter') verify(); });
+  $('code').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 6);
+    if (e.target.value.length === 6) verify();
+  });
+
+  loadSetup();
+</script>
+</body>
+</html>
