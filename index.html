@@ -827,15 +827,17 @@
 
   .form-hidden { display: none !important; }
 
-  @media (max-width: 900px) {
+  /* ============ Tablet (≤960px) ============ */
+  @media (max-width: 960px) {
     .invitation-banner {
       padding: 20px 0 0;
+      gap: 12px;
     }
     .inv-row {
       grid-template-columns: 1fr;
     }
     .inv-card {
-      padding: 24px 22px;
+      padding: 26px 24px;
       gap: 18px;
     }
     .inv-card--cream {
@@ -855,27 +857,128 @@
       border-right: none;
       border-bottom: 1px solid var(--line);
       min-height: auto;
-      padding: 32px 24px 48px;
+      padding: 28px 24px 44px;
     }
     .right {
-      padding: 48px 24px 40px;
+      padding: 44px 24px 36px;
       min-height: auto;
     }
     .rings {
-      width: 480px;
-      opacity: 0.5;
+      width: 420px;
+      opacity: 0.4;
     }
-    .hero-block { margin: 60px 0 40px; }
+    .hero-block { margin: 48px 0 32px; }
     .perks { max-width: none; }
-    h1 { font-size: clamp(42px, 10vw, 64px); }
+    h1 { font-size: clamp(38px, 9vw, 60px); }
+    .lede { margin-bottom: 36px; }
+    .countdown { margin-bottom: 36px; }
   }
 
-  @media (max-width: 480px) {
+  /* ============ Large phone (≤640px) ============ */
+  @media (max-width: 640px) {
+    .invitation-banner {
+      padding: 14px 0 0;
+      gap: 10px;
+    }
+    .inv-card {
+      padding: 22px 18px;
+      gap: 14px;
+    }
+    .inv-icon {
+      width: 48px;
+      height: 48px;
+    }
+    .inv-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .inv-title {
+      font-size: clamp(17px, 5vw, 22px);
+      margin-bottom: 10px;
+    }
+    .inv-desc {
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    .inv-btn {
+      font-size: 10px;
+      padding: 11px 18px;
+      letter-spacing: 0.16em;
+    }
+    .inv-counter-num {
+      font-size: clamp(40px, 14vw, 56px);
+    }
+    .inv-counter-label,
+    .inv-counter-status {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
     .left { padding: 24px 20px 40px; }
     .right { padding: 40px 20px 32px; }
-    .top-bar { font-size: 10px; }
+    .top-bar {
+      font-size: 10px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo-text { font-size: 16px; letter-spacing: 0.16em; }
+    .logo-svg { width: 28px; height: 28px; }
+    h1 { font-size: clamp(34px, 11vw, 48px); }
+    .eyebrow { margin-bottom: 24px; font-size: 10px; }
+    .lede { font-size: 15px; margin-bottom: 32px; }
+    .countdown { padding: 18px 20px; margin-bottom: 32px; }
+    .countdown-num { font-size: clamp(26px, 8vw, 36px); }
+    .countdown-unit { font-size: 8px; letter-spacing: 0.16em; margin-top: 6px; }
+    .perk { gap: 14px; padding-bottom: 16px; }
+    .form-title { font-size: clamp(24px, 6.5vw, 32px); }
+    .form-sub { font-size: 12.5px; margin-bottom: 28px; padding-bottom: 22px; }
+    form { gap: 18px; }
+    .field input,
+    .field select { font-size: 16px; padding: 6px 0 10px; }
+    .chip { font-size: 9.5px; padding: 8px 12px; letter-spacing: 0.1em; }
+    button[type="submit"] {
+      padding: 16px 22px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+    }
+    .footer-line {
+      font-size: 9px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+    .session-info span:first-child {
+      font-size: 9.5px;
+    }
+  }
+
+  /* ============ Small phone (≤400px) ============ */
+  @media (max-width: 400px) {
+    .invitation-banner { padding: 10px 0 0; }
+    .inv-card { padding: 20px 14px; }
+    .inv-title { font-size: 16px; line-height: 1.2; }
+    .inv-desc { font-size: 12.5px; }
+    .inv-counter-num { font-size: 38px; }
+    .left { padding: 20px 16px 32px; }
+    .right { padding: 32px 16px 28px; }
+    .top-bar {
+      font-size: 9px;
+    }
+    .session-info { font-size: 9px; gap: 6px; }
     .session-info span:first-child { display: none; }
-    .footer-line { font-size: 9px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    h1 { font-size: 32px; line-height: 1; }
+    .lede { font-size: 14px; }
+    .countdown { padding: 14px 14px; }
+    .countdown-grid { gap: 4px; }
+    .countdown-num { font-size: 22px; }
+    .countdown-unit { font-size: 7.5px; letter-spacing: 0.12em; }
+    .countdown-cell + .countdown-cell::before { left: -2px; }
+    .form-title { font-size: 22px; }
+    .field input,
+    .field select { font-size: 15px; }
+    .chips { gap: 6px; }
+    .chip { padding: 7px 10px; font-size: 9px; }
   }
 </style>
 </head>
