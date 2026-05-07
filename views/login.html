@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Woolknot Admin · Giriş</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark:     #1A1612;
+    --bg-deep:     #14110D;
+    --bg-soft:     #2A2520;
+    --cream:       #EDE4D5;
+    --cream-dim:   rgba(245, 240, 232, 0.55);
+    --cream-faint: rgba(245, 240, 232, 0.16);
+    --gold:        #B8885A;
+    --line:        rgba(245, 240, 232, 0.18);
+    --danger:      #E89090;
+    --serif: 'Fraunces', serif;
+    --sans:  'Manrope', system-ui, sans-serif;
+    --mono:  'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  body {
+    background: var(--bg-dark);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px 36px 36px;
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.005em;
+    margin-bottom: 6px;
+  }
+  .brand span { color: var(--gold); font-style: italic; }
+
+  .sub {
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin-bottom: 32px;
+    line-height: 1.55;
+  }
+
+  .step { display: none; }
+  .step.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .info-line {
+    font-size: 13px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    background: rgba(184, 136, 90, 0.07);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 2px 2px 0;
+  }
+  .info-line strong { color: var(--cream); font-weight: 500; }
+
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg-dark);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: 24px;
+    letter-spacing: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--gold); }
+  input[type="text"]::placeholder {
+    color: var(--cream-faint);
+    letter-spacing: 8px;
+  }
+
+  .btn {
+    background: var(--cream);
+    color: var(--bg-dark);
+    border: 1px solid var(--cream);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 16px 22px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 18px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .btn:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: var(--bg-deep); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .link-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 14px;
+    padding: 8px;
+    width: 100%;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .link-btn:hover { color: var(--cream); }
+  .link-btn:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: none; }
+
+  .msg {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--cream-dim);
+    min-height: 16px;
+    text-align: center;
+  }
+  .msg.error { color: var(--danger); }
+  .msg.success { color: var(--gold); }
+
+  .console-hint {
+    margin-top: 24px;
+    padding: 12px 14px;
+    background: rgba(245, 240, 232, 0.04);
+    border: 1px dashed var(--line);
+    border-radius: 2px;
+    font-size: 11px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .console-hint code {
+    font-family: var(--mono);
+    color: var(--gold);
+    background: var(--bg-dark);
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1 class="brand">Woolknot <span>Admin</span></h1>
+  <p class="sub">Yetkili e-postaya 6 haneli giriş kodu gönderilecek.</p>
+
+  <!-- Step 1: send code -->
+  <div class="step active" id="step1">
+    <button class="btn" id="sendBtn">Giriş Kodu Gönder</button>
+  </div>
+
+  <!-- Step 2: enter code -->
+  <div class="step" id="step2">
+    <p class="info-line">Kod <strong id="emailHint">—</strong> adresine gönderildi. <span id="smtpHint"></span></p>
+    <label for="code">6 Haneli Kod</label>
+    <input type="text" id="code" maxlength="6" placeholder="••••••" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" autofocus />
+    <button class="btn" id="verifyBtn">Giriş Yap</button>
+    <button class="link-btn" id="resendBtn">Kodu tekrar gönder</button>
+  </div>
+
+  <p class="msg" id="msg"></p>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const msg = $('msg');
+  let cooldownTimer = null;
+
+  function setMsg(text, type) {
+    msg.textContent = text || '';
+    msg.className = 'msg' + (type ? ' ' + type : '');
+  }
+
+  function showStep(n) {
+    $('step1').classList.toggle('active', n === 1);
+    $('step2').classList.toggle('active', n === 2);
+    if (n === 2) setTimeout(() => $('code').focus(), 100);
+  }
+
+  async function sendCode() {
+    setMsg('Gönderiliyor...');
+    $('sendBtn').disabled = true;
+    $('resendBtn').disabled = true;
+    try {
+      const r = await fetch('/admin/auth/request', { method: 'POST' });
+      const d = await r.json();
+      if (d.success) {
+        $('emailHint').textContent = d.sentTo || '(yetkili)';
+        if (!d.viaSmtp) {
+          $('smtpHint').innerHTML = '<br><span style="font-size:10.5px;letter-spacing:0.05em;color:var(--cream-faint)">SMTP yapılandırılmamış — kod sunucu loglarında.</span>';
+        }
+        setMsg('Kod gönderildi.', 'success');
+        showStep(2);
+        startCooldown();
+      } else {
+        setMsg(d.message || 'Gönderilemedi', 'error');
+        $('sendBtn').disabled = false;
+        $('resendBtn').disabled = false;
+      }
+    } catch (err) {
+      setMsg('Bağlantı hatası', 'error');
+      $('sendBtn').disabled = false;
+      $('resendBtn').disabled = false;
+    }
+  }
+
+  function startCooldown() {
+    let s = 60;
+    $('resendBtn').disabled = true;
+    cooldownTimer = setInterval(() => {
+      s--;
+      $('resendBtn').textContent = `Tekrar gönder (${s}s)`;
+      if (s <= 0) {
+        clearInterval(cooldownTimer);
+        $('resendBtn').textContent = 'Kodu tekrar gönder';
+        $('resendBtn').disabled = false;
+      }
+    }, 1000);
+  }
+
+  async function verifyCode() {
+    const code = $('code').value.trim();
+    if (!/^\d{6}$/.test(code)) { setMsg('6 haneli kod girin', 'error'); return; }
+    setMsg('Doğrulanıyor...');
+    $('verifyBtn').disabled = true;
+    try {
+      const r = await fetch('/admin/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const d = await r.json();
+      if (d.success) {
+        setMsg('Giriş başarılı, yönlendiriliyor...', 'success');
+        window.location.href = d.redirect || '/admin';
+      } else {
+        setMsg(d.message || 'Hata', 'error');
+        $('verifyBtn').disabled = false;
+        $('code').value = '';
+        $('code').focus();
+      }
+    } catch (err) {
+      setMsg('Bağlantı hatası', 'error');
+      $('verifyBtn').disabled = false;
+    }
+  }
+
+  $('sendBtn').addEventListener('click', sendCode);
+  $('resendBtn').addEventListener('click', sendCode);
+  $('verifyBtn').addEventListener('click', verifyCode);
+  $('code').addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyCode(); });
+  $('code').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 6);
+  });
+</script>
+</body>
+</html>

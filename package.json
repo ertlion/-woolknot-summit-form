@@ -12,7 +12,8 @@
     "node": ">=20"
   },
   "dependencies": {
+    "basic-auth": "^2.0.1",
     "express": "^4.19.2",
-    "basic-auth": "^2.0.1"
+    "nodemailer": "^8.0.7"
   }
 }

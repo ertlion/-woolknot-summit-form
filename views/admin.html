@@ -312,6 +312,7 @@
     <div class="meta">
       <span><a href="/" target="_blank">→ Forma git</a></span>
       <span id="lastUpdate">—</span>
+      <span><a href="#" id="logoutBtn">Çıkış</a></span>
     </div>
   </header>
 
@@ -531,6 +532,12 @@
   }
 
   $('search').addEventListener('input', applyFilter);
+
+  $('logoutBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    await fetch('/admin/logout', { method: 'POST' });
+    window.location.href = '/admin/login';
+  });
 
   loadAll();
   // Auto-refresh counter every 30s
