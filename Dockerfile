@@ -10,11 +10,7 @@ RUN npm install --omit=dev --no-audit --no-fund
 COPY . .
 
 # Persistent data dir (mount as volume in Coolify)
-RUN mkdir -p /app/data
-
-# Drop privileges
-RUN chown -R node:node /app
-USER node
+RUN mkdir -p /app/data && chmod -R 777 /app/data
 
 ENV NODE_ENV=production
 ENV PORT=3000
