@@ -21,12 +21,7 @@ const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const VERIFY_RATE_MS = 1500;                    // throttle bad attempts
 
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/marketing@woolknot.com';
-const ABACUS_NS      = 'woolknot-summit-2026';
-const ABACUS_KEY     = 'invitations';
-const ABACUS_ADMIN   = process.env.ABACUS_ADMIN_KEY || '31612311-a71a-46b2-836c-cec35db771cb';
-const ABACUS_GET     = `https://abacus.jasoncameron.dev/get/${ABACUS_NS}/${ABACUS_KEY}`;
-const ABACUS_HIT     = `https://abacus.jasoncameron.dev/hit/${ABACUS_NS}/${ABACUS_KEY}`;
-const ABACUS_SET     = (v) => `https://abacus.jasoncameron.dev/set/${ABACUS_NS}/${ABACUS_KEY}/${v}?admin_key=${ABACUS_ADMIN}`;
+// Counter is stored in state.json (state.invitationCount). No external service.
 
 // ---------------------------------------------------------------------------
 // File-backed JSON store with serialized writes (no race conditions)
@@ -101,6 +96,24 @@ function totpVerify(secret, token) {
   });
 }
 
+async function getInvitationCount() {
+  const state = await readJSON(STATE, {});
+  return Number.isFinite(state.invitationCount) ? state.invitationCount : 0;
+}
+
+async function setInvitationCount(value) {
+  const v = Math.max(0, Math.floor(Number(value) || 0));
+  const state = await readJSON(STATE, {});
+  state.invitationCount = v;
+  await writeJSON(STATE, state);
+  return v;
+}
+
+async function bumpInvitationCount(delta) {
+  const cur = await getInvitationCount();
+  return setInvitationCount(cur + delta);
+}
+
 async function markEnrolled() {
   const state = await readJSON(STATE, {});
   if (state.totp) {
@@ -172,12 +185,8 @@ app.get('/health', (_req, res) => res.type('text/plain').send('ok'));
 // Public API: invitation status (used by frontend to render counter)
 // ---------------------------------------------------------------------------
 app.get('/api/status', async (_req, res) => {
-  let value = 0;
-  try {
-    const r = await fetch(ABACUS_GET);
-    if (r.ok) value = Number((await r.json()).value) || 0;
-  } catch (e) { /* ignore */ }
-  const state = await readJSON(STATE, { forceFull: false });
+  const state = await readJSON(STATE, {});
+  const value = Number.isFinite(state.invitationCount) ? state.invitationCount : 0;
   const forceFull = !!state.forceFull;
   res.json({
     value,
@@ -223,8 +232,8 @@ app.post('/api/submit', async (req, res) => {
     console.error('persist failed:', e.message);
   }
 
-  // 2) Increment Abacus shared counter (silent fail)
-  fetch(ABACUS_HIT).catch(() => {});
+  // 2) Increment local invitation counter
+  bumpInvitationCount(1).catch(e => console.error('counter bump failed:', e.message));
 
   // 3) Forward to FormSubmit for email backup (silent fail)
   forwardToFormSubmit(submission).catch(err =>
@@ -356,15 +365,12 @@ app.delete('/admin/api/submissions/:id', adminOnly, async (req, res) => {
 });
 
 app.get('/admin/api/counter', adminOnly, async (_req, res) => {
-  let abacusValue = null;
-  try {
-    const r = await fetch(ABACUS_GET);
-    if (r.ok) abacusValue = Number((await r.json()).value) || 0;
-  } catch (e) { /* ignore */ }
-  const state = await readJSON(STATE, { forceFull: false });
+  const state = await readJSON(STATE, {});
   const subs = await readJSON(SUBMISSIONS, []);
+  const value = Number.isFinite(state.invitationCount) ? state.invitationCount : 0;
   res.json({
-    abacusValue,
+    // Keep `abacusValue` key for frontend compatibility
+    abacusValue: value,
     submissionsCount: subs.length,
     total: TOTAL_CAP,
     forceFull: !!state.forceFull,
@@ -373,18 +379,10 @@ app.get('/admin/api/counter', adminOnly, async (_req, res) => {
 
 app.post('/admin/api/counter', adminOnly, async (req, res) => {
   const { value, forceFull } = req.body || {};
-  let abacusValue = null;
+  let newValue = null;
 
   if (typeof value === 'number' && Number.isFinite(value) && value >= 0) {
-    try {
-      const r = await fetch(ABACUS_SET(Math.floor(value)));
-      if (r.ok) {
-        const data = await r.json();
-        abacusValue = Number(data.value) || 0;
-      }
-    } catch (e) {
-      console.error('abacus set failed:', e.message);
-    }
+    newValue = await setInvitationCount(value);
   }
 
   if (typeof forceFull === 'boolean') {
@@ -393,7 +391,7 @@ app.post('/admin/api/counter', adminOnly, async (req, res) => {
     await writeJSON(STATE, state);
   }
 
-  res.json({ success: true, abacusValue });
+  res.json({ success: true, abacusValue: newValue });
 });
 
 app.get('/admin/api/export.csv', adminOnly, async (_req, res) => {
