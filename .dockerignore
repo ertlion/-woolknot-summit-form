@@ -1,8 +1,12 @@
 .git
 .gitignore
+.dockerignore
 README.md
 .DS_Store
 *.md
 .vscode
 .idea
 node_modules
+data
+nginx.conf
+*.log
