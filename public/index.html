@@ -7,7 +7,7 @@
 <meta name="description" content="Woolknot'un ilk koleksiyonu, seçili davetlilerle ilk kez buluşuyor. İlk 20 kişiye özel lansman daveti." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=JetBrains+Mono:wght@300;400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     /* Warm carpet showroom palette */
@@ -22,7 +22,7 @@
     --rug-red:     #8B2820;   /* accent for highlights */
     --line:        rgba(245, 240, 232, 0.18);
     --serif: 'Fraunces', 'Times New Roman', serif;
-    --sans:  'Manrope', system-ui, sans-serif;
+    --sans:  'Futura', 'Futura PT', 'Futura LT', 'Jost', 'Avenir Next', system-ui, sans-serif;
     --mono:  'JetBrains Mono', monospace;
   }
 
@@ -140,7 +140,7 @@
   }
 
   .hero-image-title .italic {
-    font-style: italic;
+    font-style: normal;
     color: var(--cream);
   }
 
@@ -316,7 +316,7 @@
 
   .inv-counter-sep {
     color: var(--gold);
-    font-style: italic;
+    font-style: normal;
     font-size: 0.7em;
     font-weight: 300;
   }
@@ -497,7 +497,7 @@
   }
 
   h1 .italic {
-    font-style: italic;
+    font-style: normal;
     font-weight: 300;
     color: var(--cream-soft);
   }
@@ -593,7 +593,7 @@
 
   .countdown.live .countdown-num {
     color: var(--gold);
-    font-style: italic;
+    font-style: normal;
     font-size: clamp(22px, 2.4vw, 28px);
   }
 
@@ -693,7 +693,7 @@
     margin-bottom: 12px;
   }
 
-  .form-title .italic { font-style: italic; }
+  .form-title .italic { font-style: normal; font-weight: 400; }
 
   .form-sub {
     font-size: 13px;
@@ -748,7 +748,7 @@
 
   .field input::placeholder {
     color: var(--cream-faint);
-    font-style: italic;
+    font-style: normal;
   }
 
   .field input:focus,
@@ -907,7 +907,7 @@
     line-height: 1.1;
   }
 
-  .success-title .italic { font-style: italic; }
+  .success-title .italic { font-style: normal; font-weight: 400; }
 
   .success-msg {
     font-size: 13px;
@@ -1462,6 +1462,39 @@
     }
     tick();
     const timer = setInterval(tick, 1000);
+  })();
+
+  // Pre-fill from URL params (e.g., arriving from halitesti survey)
+  (function prefillFromQuery() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const qEmail = (params.get('email') || '').trim();
+      const qStyle = (params.get('style') || '').trim();
+      const qSource = (params.get('source') || '').trim();
+      if (qEmail) {
+        const el = document.getElementById('email');
+        if (el && !el.value) el.value = qEmail;
+      }
+      // Stash style/source into hidden inputs so they hit the lead record
+      const form = document.querySelector('form');
+      if (form) {
+        if (qStyle) {
+          let h = form.querySelector('input[name="halı_stili"]');
+          if (!h) {
+            h = document.createElement('input');
+            h.type = 'hidden';
+            h.name = 'halı_stili';
+            form.appendChild(h);
+          }
+          h.value = qStyle;
+        }
+        if (qSource) {
+          // Replace the static source value when arriving from a known funnel
+          const src = form.querySelector('input[name="source"]');
+          if (src) src.value = qSource;
+        }
+      }
+    } catch (_) { /* no-op */ }
   })();
 
   const chips = document.querySelectorAll('.chip');
