@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Woolknot — İlk Halkaya Katılın</title>
-<meta name="description" content="Woolknot'un özel topluluğuna katılın. Yeni koleksiyonlara erken erişim, atölye ziyaretleri ve davetli etkinlikler." />
+<title>Woolknot — The Collection Begins</title>
+<meta name="description" content="Woolknot'un ilk koleksiyonu, seçili davetlilerle ilk kez buluşuyor. İlk 20 kişiye özel lansman daveti." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -332,6 +332,15 @@
     text-transform: uppercase;
     color: var(--gold);
     margin-top: 4px;
+  }
+
+  .inv-counter-extra {
+    font-size: 12.5px;
+    line-height: 1.55;
+    font-weight: 300;
+    color: rgba(26, 22, 18, 0.65);
+    max-width: 380px;
+    margin-top: 14px;
   }
 
   .container {
@@ -1097,8 +1106,8 @@
 <section class="hero-image" aria-label="Woolknot Halı">
   <img src="hero-rug.jpg" alt="Woolknot el dokuma halısı, modern bir mekanda" loading="eager" />
   <div class="hero-image-text">
-    <div class="hero-image-eyebrow">Woolknot</div>
-    <h2 class="hero-image-title">Dokumanın <span class="italic">inceliği,</span><br>mekânın karakteri.</h2>
+    <div class="hero-image-eyebrow">Woolknot · The Collection Begins</div>
+    <h2 class="hero-image-title">İlk dokunuşa <span class="italic">siz de</span> tanıklık edin.</h2>
   </div>
 </section>
 
@@ -1120,7 +1129,7 @@
         <div class="inv-eyebrow">İlk 20 Kişiye</div>
         <h3 class="inv-title">Özel Lansman Daveti</h3>
         <p class="inv-desc" id="invDesc">
-          Lansman davet hakkı için son <strong id="invRemaining">--</strong> kişilik kontenjan kaldı.
+          Woolknot'un ayrıcalıklı lansmanına erişim kazanın.
         </p>
         <button type="button" class="inv-btn" id="invBtn">
           <span id="invBtnText">Davete Katıl</span>
@@ -1131,13 +1140,16 @@
 
     <!-- Card 2: Counter -->
     <div class="inv-card inv-card--cream inv-card--counter">
-      <div class="inv-counter-label">Davet Hakkı Kazanan Kişi Sayısı</div>
+      <div class="inv-counter-label">Davet Hakkı Kazananlar</div>
       <div class="inv-counter-num" aria-live="polite">
         <span id="invCurrent">--</span>
         <span class="inv-counter-sep">/</span>
         <span class="inv-counter-total" id="invTotal">20</span>
       </div>
       <div class="inv-counter-status" id="invCounterStatus">— Kontenjan Devam Ediyor —</div>
+      <p class="inv-counter-extra" id="invCounterExtra">
+        Kontenjan dolduktan sonra yapılan başvurular, koleksiyona site açılışından önce erişim sağlar.
+      </p>
     </div>
 
   </div>
@@ -1151,10 +1163,10 @@
       </svg>
     </div>
     <div class="inv-content">
-      <div class="inv-eyebrow">Tüm Kayıt Sahiplerine</div>
-      <h3 class="inv-title">Koleksiyonu Herkesten Önce Görün</h3>
-      <p class="inv-desc">
-        Lansman daveti kontenjanı dolmuş olsa da, Woolknot'un ilk koleksiyonunu site açılışından önce seçili misafirlerle paylaşmaya devam ediyoruz.
+      <div class="inv-eyebrow">Private Preview</div>
+      <h3 class="inv-title" id="earlyTitle">Davet hakkı dolsa bile ilk erişim sizde.</h3>
+      <p class="inv-desc" id="earlyDesc">
+        Tüm başvuru sahipleri, koleksiyona site açılışından önce erişim kazanır.
       </p>
     </div>
   </div>
@@ -1174,9 +1186,9 @@
         <span class="logo-text">Woolknot</span>
       </div>
       <div class="session-info">
-        <span>Istanbul Marketing Summit</span>
+        <span>The Collection Begins</span>
         <span class="pulse-dot"></span>
-        <span>Live</span>
+        <span>2026</span>
       </div>
     </div>
 
@@ -1191,11 +1203,11 @@
     </svg>
 
     <div class="hero-block">
-      <div class="eyebrow">Özel Davet · 2026</div>
-      <h1>İlk halkaya<br><span class="italic">katılın.</span></h1>
+      <div class="eyebrow">Woolknot · Est. 2026</div>
+      <h1>Dokumanın <span class="italic">inceliği,</span><br>mekânın karakteri.</h1>
       <p class="lede">
-        Woolknot'un özel topluluğu, dokumanın inceliğini paylaşan az sayıda kişiden oluşur.
-        Yeni koleksiyonlar, atölye ziyaretleri ve davetli etkinlikler — önce sizin için.
+        Woolknot'un ilk koleksiyonu, seçili davetlilerle ilk kez buluşuyor.
+        İlk dokunuşa siz de tanıklık edin.
       </p>
 
       <div class="countdown" id="countdown" data-target="2026-07-01T00:00:00+03:00">
@@ -1253,8 +1265,8 @@
     </div>
 
     <div class="footer-line">
-      <span>İstanbul · Marketing Summit '26</span>
-      <span>Stand · Woolknot</span>
+      <span>İlk dokunuşa tanıklık edin · Est. 2026</span>
+      <span>Woolknot</span>
     </div>
   </div>
 
@@ -1263,12 +1275,12 @@
 
       <div id="formView">
         <div class="form-eyebrow">
-          <span>Üyelik Başvurusu</span>
+          <span>İlk Erişim İçin Kayıt Olun</span>
           <span class="right-num">— 01 / 01</span>
         </div>
-        <h2 class="form-title">Adınızı <span class="italic">listeye</span> ekleyin.</h2>
+        <h2 class="form-title">İlk dokunuşa <span class="italic">siz de</span> tanıklık edin.</h2>
         <p class="form-sub">
-          Sizinle iletişime geçeceğiz. Kontenjan sınırlıdır — başvurular tek tek değerlendirilir.
+          Koleksiyonu herkesten önce keşfetmek için yerinizi alın.
         </p>
 
         <form id="joinForm" novalidate autocomplete="on">
@@ -1313,7 +1325,7 @@
 
           <div class="submit-row">
             <button type="submit" id="submitBtn">
-              <span id="btnText">Halkaya Katıl</span>
+              <span id="btnText">Kayıt Ol</span>
               <span class="arrow">→</span>
             </button>
             <p class="error-msg" id="errorMsg">Bir sorun oluştu. Lütfen tekrar deneyin.</p>
@@ -1347,29 +1359,38 @@
   const COUNTER_TOTAL = 20;
 
   function renderInvitation({ current, total }) {
+    // Display caps the counter at total (e.g. show 20/20 even if 23 registered)
+    const displayCurrent = Math.min(current, total);
     const remaining = Math.max(0, total - current);
     const isFull = remaining <= 0;
 
-    const elCurrent = document.getElementById('invCurrent');
-    const elTotal = document.getElementById('invTotal');
-    const elRemaining = document.getElementById('invRemaining');
-    const elDesc = document.getElementById('invDesc');
-    const elBtn = document.getElementById('invBtn');
-    const elBtnText = document.getElementById('invBtnText');
-    const elArrow = elBtn ? elBtn.querySelector('.arrow') : null;
-    const elStatus = document.getElementById('invCounterStatus');
+    const elCurrent       = document.getElementById('invCurrent');
+    const elTotal         = document.getElementById('invTotal');
+    const elDesc          = document.getElementById('invDesc');
+    const elBtn           = document.getElementById('invBtn');
+    const elBtnText       = document.getElementById('invBtnText');
+    const elArrow         = elBtn ? elBtn.querySelector('.arrow') : null;
+    const elStatus        = document.getElementById('invCounterStatus');
+    const elCounterExtra  = document.getElementById('invCounterExtra');
+    const elEarlyTitle    = document.getElementById('earlyTitle');
+    const elEarlyDesc     = document.getElementById('earlyDesc');
 
-    if (elCurrent) elCurrent.textContent = current;
+    if (elCurrent) elCurrent.textContent = displayCurrent;
     if (elTotal) elTotal.textContent = total;
-    if (elRemaining) elRemaining.textContent = remaining;
 
     if (isFull) {
-      if (elDesc) elDesc.textContent = "Woolknot'un özel lansman davet kontenjanı tamamlandı.";
+      if (elDesc) elDesc.textContent = "Woolknot'un ayrıcalıklı lansmanına erişim kazanın.";
       if (elBtnText) elBtnText.textContent = 'Davet Kontenjanı Doldu';
       if (elBtn) elBtn.disabled = true;
       if (elArrow) elArrow.style.display = 'none';
-      if (elStatus) elStatus.textContent = '— Davetiye Hakkı Doldu —';
+      if (elStatus) elStatus.textContent = '— Kontenjan Doldu —';
+      if (elCounterExtra) elCounterExtra.textContent =
+        'Tüm davet hakları dolmuştur. Koleksiyona site açılışından önce erişim için kaydınızı oluşturun.';
+      if (elEarlyTitle) elEarlyTitle.textContent = 'Davet hakkı doldu. İlk erişim sizinle.';
+      if (elEarlyDesc)  elEarlyDesc.textContent =
+        'Koleksiyona site açılışından önce erişim elde edin. Gelişmelerden ilk siz haberdar olun.';
     } else {
+      if (elDesc) elDesc.textContent = "Woolknot'un ayrıcalıklı lansmanına erişim kazanın.";
       if (elBtn) {
         elBtn.disabled = false;
         elBtn.addEventListener('click', () => {
@@ -1381,7 +1402,12 @@
           }, 500);
         });
       }
-      if (elStatus) elStatus.textContent = '— ' + remaining + ' Davet Hakkı Kaldı —';
+      if (elStatus) elStatus.textContent = '— ' + remaining + ' Kişilik Kontenjan Kaldı —';
+      if (elCounterExtra) elCounterExtra.textContent =
+        'Kontenjan dolduktan sonra yapılan başvurular, koleksiyona site açılışından önce erişim sağlar.';
+      if (elEarlyTitle) elEarlyTitle.textContent = 'Davet hakkı dolsa bile ilk erişim sizde.';
+      if (elEarlyDesc)  elEarlyDesc.textContent =
+        'Tüm başvuru sahipleri, koleksiyona site açılışından önce erişim kazanır.';
     }
   }
 
@@ -1520,7 +1546,7 @@
           chips.forEach(c => c.classList.remove('active'));
           interestInput.value = '';
           submitBtn.disabled = false;
-          btnText.textContent = 'Halkaya Katıl';
+          btnText.textContent = 'Kayıt Ol';
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 12000);
       } else {
@@ -1532,7 +1558,7 @@
       errorMsg.textContent = 'Bir sorun oluştu. Lütfen tekrar deneyin veya bizi arayın.';
       errorMsg.classList.add('show');
       submitBtn.disabled = false;
-      btnText.textContent = 'Halkaya Katıl';
+      btnText.textContent = 'Kayıt Ol';
     }
   });
 </script>
